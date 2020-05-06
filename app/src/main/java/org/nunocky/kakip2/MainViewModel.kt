@@ -3,7 +3,6 @@ package org.nunocky.kakip2
 import android.app.Application
 import android.content.res.TypedArray
 import android.graphics.*
-import android.util.Log
 import android.view.SurfaceHolder
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
@@ -11,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 
@@ -35,7 +35,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
 
     var categoryId: Int = 0
         set(value) {
-            Log.d(TAG, "categoryId = $categoryId")
+            //Log.d(TAG, "categoryId = $categoryId")
             field = value
             reload()
         }
@@ -99,13 +99,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
 
 
     override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
-        //Log.d(TAG, "surfaceChanged $width x $height")
         surfaceHolder = holder
 
         world = KakiPWorld(width.toFloat(), height.toFloat())
 
         reload()
-        runCoroutine()
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder?) {
@@ -144,7 +142,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
 
         // START TIMER
         job = viewModelScope.launch {
-            while (true) {
+            while (isActive) {
                 delay((1000 / 60).toLong())
                 world.step()
 
