@@ -32,56 +32,41 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     private lateinit var world: KakiPWorld
 
 
-    private fun loadBitmapsFromArray(resources: Array<Int>): List<Bitmap> {
+    private fun loadKakiPBitmaps(): List<Bitmap> {
+        val application = getApplication<Application>()
+        val resources = application.resources
+        val ary = resources.getIntArray(R.array.kakip)
+        return loadBitmapsFromArray(ary)
+    }
+
+    private fun loadMarbleBitmaps(): List<Bitmap> {
+        val application = getApplication<Application>()
+        val resources = application.resources
+        val ary = resources.getIntArray(R.array.marble)
+        return loadBitmapsFromArray(ary)
+    }
+
+    private fun loadKinoTakeBitmaps(): List<Bitmap> {
+        val application = getApplication<Application>()
+        val resources = application.resources
+        val ary = resources.getIntArray(R.array.kinotake)
+        return loadBitmapsFromArray(ary)
+    }
+
+    private fun loadBitmapsFromArray(ary: IntArray): List<Bitmap> {
         val bitmaps = ArrayList<Bitmap>()
         val options = BitmapFactory.Options()
         options.inScaled = false
 
         val application = getApplication<Application>()
+        val resources = application.resources
 
-        resources.forEach { id ->
-            bitmaps.add(BitmapFactory.decodeResource(application.resources, id, options))
+        ary.forEach { id ->
+            bitmaps.add(BitmapFactory.decodeResource(resources, id, options))
         }
 
         return bitmaps
     }
-
-    private fun loadKakiPBitmaps(): List<Bitmap> {
-        val resources = arrayOf(
-            R.drawable.kakip0,
-            R.drawable.kakip1,
-            R.drawable.kakip2,
-            R.drawable.kakip3,
-            R.drawable.kakip4,
-            R.drawable.kakip5,
-            R.drawable.kakip6,
-            R.drawable.kakip7
-        )
-        return loadBitmapsFromArray(resources)
-    }
-
-    private fun loadMarbleBitmaps(): List<Bitmap> {
-        val resources = arrayOf(
-            R.drawable.marble0,
-            R.drawable.marble1,
-            R.drawable.marble2,
-            R.drawable.marble3,
-            R.drawable.marble4,
-            R.drawable.marble5
-        )
-        return loadBitmapsFromArray(resources)
-    }
-
-    private fun loadKinoTakeBitmaps(): List<Bitmap> {
-        val resources = arrayOf(
-            R.drawable.kinotake0,
-            R.drawable.kinotake1,
-            R.drawable.kinotake2,
-            R.drawable.kinotake3
-        )
-        return loadBitmapsFromArray(resources)
-    }
-
 
     override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
         //Log.d(TAG, "surfaceChanged $width x $height")

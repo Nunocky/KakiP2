@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="kakip">
+        <item>@drawable/kakip0</item>
+        <item>@drawable/kakip1</item>
+        <item>@drawable/kakip2</item>
+        <item>@drawable/kakip3</item>
+        <item>@drawable/kakip4</item>
+        <item>@drawable/kakip5</item>
+        <item>@drawable/kakip6</item>
+        <item>@drawable/kakip7</item>
+    </integer-array>
+
+    <integer-array name="marble">
+        <item>@drawable/marble0</item>
+        <item>@drawable/marble1</item>
+        <item>@drawable/marble2</item>
+        <item>@drawable/marble3</item>
+        <item>@drawable/marble4</item>
+        <item>@drawable/marble5</item>
+    </integer-array>
+
+    <integer-array name="kinotake">
+        <item>@drawable/kinotake0</item>
+        <item>@drawable/kinotake1</item>
+        <item>@drawable/kinotake2</item>
+        <item>@drawable/kinotake3</item>
+    </integer-array>
+
+</resources>
