@@ -19,10 +19,6 @@ class MainActivity : AppCompatActivity() {
 
     private var statusbarHeight: Int = 0
 
-    private lateinit var menu_kakip: MenuItem
-    private lateinit var menu_marble: MenuItem
-    private lateinit var menu_kinotake: MenuItem
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -76,13 +72,13 @@ class MainActivity : AppCompatActivity() {
         inflater.inflate(R.menu.menu_main, menu)
 
         menu?.let {
-            menu_kakip = it.findItem(R.id.menu_kakip)
-            menu_marble = it.findItem(R.id.menu_marble)
-            menu_kinotake = it.findItem(R.id.menu_kinotame)
+            val menuKakip = it.findItem(R.id.menu_kakip)
+            val menuMarble = it.findItem(R.id.menu_marble)
+            val menuKinotake = it.findItem(R.id.menu_kinotame)
 
-            menu_kakip.isVisible = viewModel.categoryId != 0
-            menu_marble.isVisible = viewModel.categoryId != 1
-            menu_kinotake.isVisible = viewModel.categoryId != 2
+            menuKakip.isVisible = viewModel.categoryId != 0
+            menuMarble.isVisible = viewModel.categoryId != 1
+            menuKinotake.isVisible = viewModel.categoryId != 2
         }
 
         return true

@@ -136,7 +136,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         runCoroutine()
     }
 
-    fun runCoroutine() {
+    private fun runCoroutine() {
         val screenWidth = world.screenWidth
         val screenHeight = world.screenHeight
         val worldWidth = world.worldWidth
