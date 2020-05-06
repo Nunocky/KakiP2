@@ -67,6 +67,11 @@ class MainActivity : AppCompatActivity() {
 //        return true
 //    }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        invalidateOptionsMenu()
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.menu_main, menu)
@@ -93,17 +98,14 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.menu_kakip -> {
                 viewModel.categoryId = 0
-                invalidateOptionsMenu()
                 true
             }
             R.id.menu_marble -> {
                 viewModel.categoryId = 1
-                invalidateOptionsMenu()
                 true
             }
             R.id.menu_kinotame -> {
                 viewModel.categoryId = 2
-                invalidateOptionsMenu()
                 true
             }
             else -> {
