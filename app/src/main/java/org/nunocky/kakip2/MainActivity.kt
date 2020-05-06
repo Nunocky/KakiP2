@@ -2,6 +2,9 @@ package org.nunocky.kakip2
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.MotionEvent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -16,11 +19,16 @@ class MainActivity : AppCompatActivity() {
 
     private var statusbarHeight: Int = 0
 
+    private lateinit var menu_kakip: MenuItem
+    private lateinit var menu_marble: MenuItem
+    private lateinit var menu_kinotake: MenuItem
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val surfaceView = MySurfaceView(this)
         setContentView(surfaceView)
+
         surfaceView.holder.addCallback(viewModel)
 
         surfaceView.setOnTouchListener { _, event ->
@@ -45,8 +53,6 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
             }
-
-
         }
     }
 
@@ -65,6 +71,49 @@ class MainActivity : AppCompatActivity() {
 //        return true
 //    }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_main, menu)
 
+        menu?.let {
+            menu_kakip = it.findItem(R.id.menu_kakip)
+            menu_marble = it.findItem(R.id.menu_marble)
+            menu_kinotake = it.findItem(R.id.menu_kinotame)
+
+            menu_kakip.isVisible = viewModel.categoryId != 0
+            menu_marble.isVisible = viewModel.categoryId != 1
+            menu_kinotake.isVisible = viewModel.categoryId != 2
+        }
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when (item.itemId) {
+            R.id.menu_reset -> {
+                viewModel.reset()
+                true
+            }
+            R.id.menu_kakip -> {
+                viewModel.categoryId = 0
+                invalidateOptionsMenu()
+                true
+            }
+            R.id.menu_marble -> {
+                viewModel.categoryId = 1
+                invalidateOptionsMenu()
+                true
+            }
+            R.id.menu_kinotame -> {
+                viewModel.categoryId = 2
+                invalidateOptionsMenu()
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
 }
 

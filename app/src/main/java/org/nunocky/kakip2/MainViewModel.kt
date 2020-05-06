@@ -1,7 +1,9 @@
 package org.nunocky.kakip2
 
 import android.app.Application
+import android.content.res.TypedArray
 import android.graphics.*
+import android.util.Log
 import android.view.SurfaceHolder
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
@@ -31,26 +33,53 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
 
     private lateinit var world: KakiPWorld
 
+    var categoryId: Int = 0
+        set(value) {
+            Log.d(TAG, "categoryId = $categoryId")
+            field = value
+            reload()
+        }
+
+    fun reset() {
+        world.reset()
+    }
 
     private fun loadKakiPBitmaps(): List<Bitmap> {
         val application = getApplication<Application>()
         val resources = application.resources
-        val ary = resources.getIntArray(R.array.kakip)
-        return loadBitmapsFromArray(ary)
+
+        val ary = ArrayList<Int>()
+        val typedArray: TypedArray = resources.obtainTypedArray(R.array.kakip)
+        for (i in 0 until typedArray.length()) {
+            ary.add(typedArray.getResourceId(i, 0))
+        }
+        typedArray.recycle()
+
+        return loadBitmapsFromArray(ary.toIntArray())
     }
 
     private fun loadMarbleBitmaps(): List<Bitmap> {
         val application = getApplication<Application>()
         val resources = application.resources
-        val ary = resources.getIntArray(R.array.marble)
-        return loadBitmapsFromArray(ary)
+        val ary = ArrayList<Int>()
+        val typedArray: TypedArray = resources.obtainTypedArray(R.array.marble)
+        for (i in 0 until typedArray.length()) {
+            ary.add(typedArray.getResourceId(i, 0))
+        }
+        typedArray.recycle()
+        return loadBitmapsFromArray(ary.toIntArray())
     }
 
     private fun loadKinoTakeBitmaps(): List<Bitmap> {
         val application = getApplication<Application>()
         val resources = application.resources
-        val ary = resources.getIntArray(R.array.kinotake)
-        return loadBitmapsFromArray(ary)
+        val ary = ArrayList<Int>()
+        val typedArray: TypedArray = resources.obtainTypedArray(R.array.kinotake)
+        for (i in 0 until typedArray.length()) {
+            ary.add(typedArray.getResourceId(i, 0))
+        }
+        typedArray.recycle()
+        return loadBitmapsFromArray(ary.toIntArray())
     }
 
     private fun loadBitmapsFromArray(ary: IntArray): List<Bitmap> {
@@ -68,18 +97,46 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         return bitmaps
     }
 
+
     override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
         //Log.d(TAG, "surfaceChanged $width x $height")
         surfaceHolder = holder
 
         world = KakiPWorld(width.toFloat(), height.toFloat())
 
-        val bitmaps = loadKakiPBitmaps()
-        //val bitmaps = loadMarbleBitmaps()
-        //val bitmaps = loadKinoTakeBitmaps()
+        reload()
+        runCoroutine()
+    }
 
+    override fun surfaceDestroyed(holder: SurfaceHolder?) {
+        // stop timer
+        job?.cancel()
+        job = null
+        surfaceHolder = null
+    }
+
+    override fun surfaceCreated(holder: SurfaceHolder?) {
+    }
+
+    private fun reload() {
+        val bitmaps = when (categoryId) {
+            1 -> {
+                loadMarbleBitmaps()
+            }
+            2 -> {
+                loadKinoTakeBitmaps()
+            }
+            else -> {
+                loadKakiPBitmaps()
+            }
+        }
         world.setup(bitmaps)
 
+        job?.cancel()
+        runCoroutine()
+    }
+
+    fun runCoroutine() {
         val screenWidth = world.screenWidth
         val screenHeight = world.screenHeight
         val worldWidth = world.worldWidth
@@ -140,16 +197,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
                 }
             }
         }
-    }
 
-    override fun surfaceDestroyed(holder: SurfaceHolder?) {
-        // stop timer
-        job?.cancel()
-        job = null
-        surfaceHolder = null
-    }
-
-    override fun surfaceCreated(holder: SurfaceHolder?) {
     }
 
     fun onTouch(sx: Float, sy: Float) {

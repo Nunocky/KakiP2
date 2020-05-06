@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">KakiP2</string>
+    <string name="reset">Reset</string>
+    <string name="kakip">KakiP</string>
+    <string name="marble">Marble</string>
+    <string name="kinokotakenoko">KinokoTakenoko</string>
 </resources>

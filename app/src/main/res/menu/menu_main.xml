@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_reset"
+        android:title="@string/reset" />
+    <item
+        android:id="@+id/menu_kakip"
+        android:title="@string/kakip" />
+    <item
+        android:id="@+id/menu_marble"
+        android:title="@string/marble" />
+    <item
+        android:id="@+id/menu_kinotame"
+        android:title="@string/kinokotakenoko" />
+</menu>

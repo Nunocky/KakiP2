@@ -80,7 +80,17 @@ class KakiPWorld(val screenWidth: Float, val screenHeight: Float) {
             val kakiP = createKakiP(bitmap, x, y, w, h, rad)
             kakiPs.add(kakiP)
         }
+    }
 
+    fun reset() {
+        for (kakip in kakiPs) {
+            val wx = Random.nextFloat() * worldWidth
+            val wy = Random.nextFloat() * worldHeight
+            val rad = Random.nextFloat() * (2 * Math.PI).toFloat()
+
+            kakip.body.position
+            kakip.body.setTransform(Vec2(wx, wy), rad)
+        }
     }
 
     fun step() {
