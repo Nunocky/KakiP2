@@ -74,7 +74,7 @@ class KakiPWorld(val screenWidth: Float, val screenHeight: Float) {
 
             val x = Random.nextFloat() * worldWidth
             val y = Random.nextFloat() * worldHeight
-            val w = bitmap.width * 2f / 480
+            val w = bitmap.width * 2f / 400
             val h = bitmap.height * w / bitmap.width
             val rad = Random.nextFloat() * (2 * Math.PI).toFloat()
             val kakiP = createKakiP(bitmap, x, y, w, h, rad)
